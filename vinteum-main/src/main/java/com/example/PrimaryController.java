@@ -19,7 +19,9 @@ public class PrimaryController {
     @FXML private Label pontosJogador;
     @FXML private Label resultado;
 
-    public void turno(){
+    private Jogo jogo = new Jogo();
+
+    private void turno(){
 
     }
 
@@ -28,7 +30,7 @@ public class PrimaryController {
     }
 
     public void novoJogo(){
-
+        
     }
 
     public void pedirCarta(){
