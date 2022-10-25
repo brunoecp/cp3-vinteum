@@ -10,9 +10,12 @@ public class Carta{
         this.naipe = naipe;
         this.numero = numero;
     }
+    public Carta(){
+        
+    }
 
     public String imagePath(int numero, Naipe naipe) {
-        return "classic-cards/" + numero + this.naipe + ".png";
+        return "classic-cards/" + this.numero + this.naipe + ".png";
     }
 
     public int getNumero() {

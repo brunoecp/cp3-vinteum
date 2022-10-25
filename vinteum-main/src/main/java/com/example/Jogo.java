@@ -10,6 +10,9 @@ public class Jogo {
         monte.embaralhar();
     }
     public Carta distribuiCartaParaJogador(Jogador jogador) {
+        if(jogador.isParou() == false){
+            jogador.getCartas().add(monte.virar());
+        }
         return null;
     }
     public boolean acabou() {
