@@ -22,28 +22,44 @@ public class PrimaryController {
     private Jogo jogo = new Jogo();
 
     private void turno(){
-
+        jogo.distribuiCartaParaJogador(jogo.getJogador());
+        jogo.distribuiCartaParaJogador(jogo.getComputador());
+        jogo.acabou();
     }
 
     public void atualizar(){
+        pontosJogador.setText(String.valueOf(jogo.getJogador().getPontos()));
+        if(jogo.acabou() == true){
+            if(jogo.jogador.getPontos() > jogo.getComputador().getPontos() && jogo.getJogador().getPontos() <= 21){
+                resultado.setText("Você ganhou");
+            }else if(jogo.jogador.getPontos() == 21 && jogo.computador.getPontos() == 21){
+                resultado.setText("Empatou");
+            }else{
+                resultado.setText("Você perdeu");
+            }
+        }
         
     }
 
     public void novoJogo(){
-        
+        mesaDoComputador.clearConstraints(mesaDoComputador);
+        mesaDoJogador.clearConstraints(mesaDoJogador);
+        pontosMesa.setText("Mesa");
+        pontosJogador.setText("Você");
+        resultado.setText("");
     }
 
     public void pedirCarta(){
-
+        turno();
     }
 
     public void parar(){
-
+        jogo.getJogador().setParou(true);
     }
     
 
-    // private ImageView imagemCarta(Carta carta) {
-    //    return new ImageView(App.class.getResource(carta.imagePath()).toString());
-    // }
+     private ImageView imagemCarta(Carta carta) {
+        return new ImageView(App.class.getResource(carta.imagePath(carta.getNumero(),carta.getNaipe())).toString());
+    }
 
 }
