@@ -1,10 +1,6 @@
 package com.example;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -22,31 +18,48 @@ public class PrimaryController {
     private Jogo jogo = new Jogo();
 
     private void turno(){
-        jogo.distribuiCartaParaJogador(jogo.getJogador());
-        jogo.distribuiCartaParaJogador(jogo.getComputador());
-        jogo.acabou();
+        Carta distribuiCartaParaJogador = jogo.distribuiCartaParaJogador(jogo.getJogador());
+        Carta distribuiCartaParaJogador2 = jogo.distribuiCartaParaJogador(jogo.getComputador());
+        if (distribuiCartaParaJogador != null){
+        mesaDoJogador.getChildren().add(imagemCarta(distribuiCartaParaJogador));
+        }
+        if (distribuiCartaParaJogador2 != null){
+            mesaDoComputador.getChildren().add(imagemCarta(distribuiCartaParaJogador2));
+        }
+        atualizar();
     }
 
-    public void atualizar(){
+    private void atualizar(){
         pontosJogador.setText(String.valueOf(jogo.getJogador().getPontos()));
+        pontosMesa.setText(String.valueOf(jogo.computador.getPontos()));
         if(jogo.acabou() == true){
-            if(jogo.jogador.getPontos() > jogo.getComputador().getPontos() && jogo.getJogador().getPontos() <= 21){
+            if(jogo.jogador.getPontos() > 21 && jogo.getComputador().getPontos() > 21){
+                if(jogo.getJogador().getPontos()< jogo.getComputador().getPontos()){
+                    resultado.setText("Você ganhou");    
+                }else{
+                    resultado.setText("Você perdeu");
+                }
+            }else if(jogo.getJogador().getPontos() > 21){
+                resultado.setText("Você perdeu");
+            }
+            else if(jogo.getJogador().getPontos() > jogo.getComputador().getPontos()){
                 resultado.setText("Você ganhou");
-            }else if(jogo.jogador.getPontos() == 21 && jogo.computador.getPontos() == 21){
+            }else if(jogo.jogador.getPontos() == jogo.computador.getPontos() && jogo.computador.getPontos() == jogo.jogador.getPontos()){
                 resultado.setText("Empatou");
             }else{
-                resultado.setText("Você perdeu");
+                resultado.setText("Você ganhou");
             }
         }
         
     }
 
     public void novoJogo(){
-        mesaDoComputador.clearConstraints(mesaDoComputador);
-        mesaDoJogador.clearConstraints(mesaDoJogador);
         pontosMesa.setText("Mesa");
         pontosJogador.setText("Você");
         resultado.setText("");
+        mesaDoJogador.getChildren().clear();
+        mesaDoComputador.getChildren().clear();
+        jogo = new Jogo();
     }
 
     public void pedirCarta(){
@@ -57,9 +70,10 @@ public class PrimaryController {
         jogo.getJogador().setParou(true);
     }
     
-
      private ImageView imagemCarta(Carta carta) {
-        return new ImageView(App.class.getResource(carta.imagePath(carta.getNumero(),carta.getNaipe())).toString());
+        String pathCarta = carta.imagePath();
+        System.out.println(pathCarta);
+        return new ImageView(App.class.getResource(pathCarta).toString());
     }
 
 }
