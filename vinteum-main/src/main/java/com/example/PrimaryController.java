@@ -72,7 +72,6 @@ public class PrimaryController {
     
      private ImageView imagemCarta(Carta carta) {
         String pathCarta = carta.imagePath();
-        System.out.println(pathCarta);
         return new ImageView(App.class.getResource(pathCarta).toString());
     }
 
